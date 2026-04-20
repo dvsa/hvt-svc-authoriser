@@ -23,4 +23,9 @@ jobs:
       - run: npm run package
         env:
           ZIP_NAME: ${{ github.run_id }}
-      - run: ls -lah
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: authorisation-lambda-package-${{ github.run_id }}
+          path: ./${{ github.run_id }}.zip
+          retention-days: 3
