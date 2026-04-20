@@ -1,4 +1,4 @@
-name: Build hash and deploy to S3
+name: 🟢 Build hash and deploy to S3
 
 on:
   workflow_dispatch:
