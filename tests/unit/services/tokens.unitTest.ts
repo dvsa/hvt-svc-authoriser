@@ -1,6 +1,5 @@
 import { getValidJwt } from "../../../src/services/tokens";
 import { JWT_MESSAGE } from "../../../src/models/enums";
-import { ILogEvent } from "../../../src/models/ILogEvent";
 
 jest.mock("../../../src/services/signature-check", () => {
   return { checkSignature: jest.fn().mockResolvedValue(true) };

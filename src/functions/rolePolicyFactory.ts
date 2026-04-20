@@ -2,8 +2,7 @@ export function toAllVerbsAndAllResources(methodArn: string): string {
   const parts = methodArn?.split("/");
 
   if (!parts || parts.length < 2) {
-    const methodArnText = typeof methodArn === "string" ? `"${methodArn}"` : `(${methodArn})`;
-    throw new Error(`Failed to extract arnBase and stageName from methodArn: ${methodArnText}`);
+    throw new Error(`Failed to extract arnBase and stageName from methodArn: "${methodArn}"`);
   }
 
   const arnBase = parts[0];

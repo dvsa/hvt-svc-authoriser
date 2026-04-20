@@ -7,7 +7,7 @@ plugins:
 provider:
   region: eu-west-1
   name: aws
-  runtime: nodejs22.x
+  runtime: nodejs24.x
   timeout: 60
 
 functions:
