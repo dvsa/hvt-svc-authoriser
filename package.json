@@ -2,12 +2,10 @@
   "name": "hvt-svc-authoriser",
   "version": "1.0.0",
   "description": "Lambda authoriser for validating a user's Azure AD JWT and generating an access policy.",
-  "main": "handler.js",
+  "license": "ISC",
+  "author": "DVSA",
   "type": "module",
-  "engines": {
-    "node": "24.10.*",
-    "npm": "11.6.*"
-  },
+  "main": "handler.js",
   "scripts": {
     "start": "npm run build && sls offline start",
     "build": "bun package.ts",
@@ -18,16 +16,14 @@
     "package": "bun package.ts && cd ${ZIP_NAME:-'authoriser'}; zip -r ../${ZIP_NAME:-'authoriser'}.zip *",
     "test-i": "echo \"No Current Int Tests\"",
     "security-checks": "git secrets --scan",
-    "lint": "tslint src/**/*.ts tests/**/*.ts",
-    "format": "prettier --write .",
+    "lint": "oxlint --fix",
+    "format": "oxfmt",
     "sonar-scanner": "sonar-scanner",
     "generate-token": "bun scripts/generate-token.ts --env-file .env",
     "audit": "npm audit --omit=dev",
     "prepare": "husky",
     "tools-setup": "echo 'Nothing to do'"
   },
-  "author": "DVSA",
-  "license": "ISC",
   "dependencies": {
     "jsonwebtoken": "^9.0.3"
   },
@@ -48,21 +44,24 @@
     "jest-plugin-context": "2.9.0",
     "jest-sonar-reporter": "2.0.0",
     "osls": "3.63.2",
-    "prettier": "3.8.1",
+    "oxfmt": "0.45.0",
+    "oxlint": "1.60.0",
     "serverless-dotenv-plugin": "6.0.0",
     "serverless-offline": "^14.5.0",
-    "serverless-plugin-typescript": "^2.1.5",
     "ts-jest": "^29.2.5",
-    "tslint": "6.1.3",
     "typescript": "6.0.2"
+  },
+  "overrides": {
+    "serverless": "npm:osls",
+    "typescript": "$typescript"
+  },
+  "engines": {
+    "node": "24.10.*",
+    "npm": "11.6.*"
   },
   "jestSonar": {
     "reportPath": ".reports",
     "reportFile": "test-report.xml",
     "indent": 4
-  },
-  "overrides": {
-    "serverless": "npm:osls",
-    "typescript": "$typescript"
   }
 }

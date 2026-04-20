@@ -1,5 +1,4 @@
 import * as jsonWebToken from "jsonwebtoken";
-import { getCertificateChain } from "../../../src/services/azure";
 import jwtJson from "../../resources/jwt.json";
 import { checkSignature } from "../../../src/services/signature-check";
 
@@ -10,11 +9,11 @@ jest.mock("jsonwebtoken", () => ({
   verify: jest.fn().mockImplementationOnce((token, _certificate, _options) => token),
 }));
 
-describe("checkSignature()", () => {
-  beforeAll(() => {
-    (getCertificateChain as jest.Mock) = jest.fn().mockReturnValue("fake certificate");
-  });
+jest.mock("../../../src/services/azure", () => ({
+  getCertificateChain: jest.fn().mockReturnValue("fake certificate"),
+}));
 
+describe("checkSignature()", () => {
   it("should successfully verify token strings", async () => {
     const header = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFCQ0RFRiJ9";
     const payload = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJ0aWQiOiIxMjM0NTYifQ";
