@@ -11,5 +11,9 @@ import { build } from "esbuild";
     sourcemap: process.argv.includes("--source-map"),
     logLevel: "info",
     platform: "node",
+    format: "esm",
+    banner: {
+      js: 'import { createRequire } from "module"; const require = createRequire(import.meta.url);',
+    },
   });
 })();
