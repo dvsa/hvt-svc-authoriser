@@ -9,10 +9,10 @@
     "npm": "11.6.*"
   },
   "scripts": {
-    "start": "sls offline start",
-    "build": "node_modules/typescript/bin/tsc --rootDir ./ --outDir .build --sourceMap false && npm run build:copy",
-    "build:dev": "node_modules/typescript/bin/tsc && npm run build:copy",
-    "build:copy": "find src -type f \\( -name \"*.yml\" -or -name \"*.json\" \\) | cpio -pdm .build && find tests -type f \\( -name \"*.yml\" -or -name \"*.json\" \\)  | cpio -pdm .build",
+    "start": "npm run build && sls offline start",
+    "build": "bun package.ts",
+    "build:dev": "bun package.ts",
+    "build:copy": "bun package.ts",
     "test": "npm run test:unit -- --runInBand --coverage",
     "test:unit": "BRANCH=local jest --testMatch=\"**/*.unitTest.ts\"",
     "package": "bun package.ts && cd ${ZIP_NAME:-'authoriser'}; zip -r ../${ZIP_NAME:-'authoriser'}.zip *",

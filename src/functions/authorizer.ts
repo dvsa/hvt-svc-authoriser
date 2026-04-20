@@ -21,7 +21,7 @@ const authorizer = async (event: APIGatewayTokenAuthorizerEvent, _context: Conte
 
   const methodArn = toAllVerbsAndAllResources(event.methodArn);
 
-  if (!process.env.AZURE_TENANT_ID || !process.env.AZURE_CLIENT_ID) {
+  if (!process.env.TENANT_ID || !process.env.CLIENT_ID) {
     writeLogMessage(event, logEvent, JWT_MESSAGE.INVALID_ID_SETUP);
     return createAuthResult("Deny", methodArn);
   }
@@ -31,7 +31,7 @@ const authorizer = async (event: APIGatewayTokenAuthorizerEvent, _context: Conte
   try {
     envLogger(LogLevel.INFO, "Getting valid JWT");
 
-    const jwt = await getValidJwt(event.authorizationToken, process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID);
+    const jwt = await getValidJwt(event.authorizationToken, process.env.TENANT_ID, process.env.CLIENT_ID);
 
     envLogger(LogLevel.DEBUG, `JWT retrieved`, JSON.stringify(jwt));
 

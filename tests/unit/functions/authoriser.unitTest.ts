@@ -14,8 +14,8 @@ const event: APIGatewayTokenAuthorizerEvent = {
 
 describe("authorizer()", () => {
   beforeEach(() => {
-    process.env.AZURE_TENANT_ID = "tenant";
-    process.env.AZURE_CLIENT_ID = "client";
+    process.env.TENANT_ID = "tenant";
+    process.env.CLIENT_ID = "client";
     jest.spyOn(console, "error").mockImplementation(jest.fn());
     (getValidJwt as jest.Mock).mockResolvedValue({});
   });
@@ -23,8 +23,8 @@ describe("authorizer()", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
-    delete process.env.AZURE_TENANT_ID;
-    delete process.env.AZURE_CLIENT_ID;
+    delete process.env.TENANT_ID;
+    delete process.env.CLIENT_ID;
   });
 
   it("allows all verbs and resources when the token is valid", async () => {
@@ -47,7 +47,7 @@ describe("authorizer()", () => {
   });
 
   it("denies all verbs and resources when Azure configuration is missing", async () => {
-    delete process.env.AZURE_TENANT_ID;
+    delete process.env.TENANT_ID;
 
     const returnValue = await authorizer(event, exampleContext());
 

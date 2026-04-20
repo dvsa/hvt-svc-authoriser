@@ -1,9 +1,8 @@
 service: hvt-svc-authoriser
 
 plugins:
-  - serverless-offline
-  - serverless-plugin-typescript
   - serverless-dotenv-plugin
+  - serverless-offline
 
 provider:
   region: eu-west-1
@@ -13,7 +12,7 @@ provider:
 
 functions:
   authoriserFunction:
-    handler: src/handler.handler
+    handler: authoriser/handler.handler
   testFunction:
     handler: tests/handler.test
     events:
