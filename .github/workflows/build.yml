@@ -1,0 +1,25 @@
+name: Build hash and deploy to S3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  build:
+    name: build & store
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+      
+      - run: npm run package
+        env:
+          ZIP_NAME: ${{ github.run_id }}
+      - run: ls -lah
