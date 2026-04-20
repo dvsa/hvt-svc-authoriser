@@ -37,6 +37,7 @@ npm run build
 Output folder: `authoriser/` (Git-ignored)
 
 To create the `authoriser` artefact, then run:
+
 ```shell script
 npm run package
 ```
@@ -58,6 +59,7 @@ This project uses [oxlint](https://oxc.rs/docs/guide/usage/linter.htmls) and [ox
 ```shell script
 npm run lint
 ```
+
 And
 
 ```shell script
@@ -87,13 +89,11 @@ npm run generate-token
 
 Which will create you a JWT token starting `eyJ0...`.
 
-
 Then, we use the [serverless-offline](https://github.com/dherault/serverless-offline) package to run the lambda locally. A test function is initialised and protected by the lambda authoriser. Details of the configuration are in the serverless.yml file.
-
 
 ### Running
 
-Run `npm start` to run the test function and lambda authoriser. 
+Run `npm start` to run the test function and lambda authoriser.
 
 ```http request
 POST http://localhost:3000/dev/testFunction
