@@ -5,7 +5,7 @@ import { build } from "esbuild";
 
   await build({
     entryPoints: ["src/handler.ts"],
-    outfile: `${zipName}/handler.js`,
+    outfile: `${zipName}/handler.mjs`,
     bundle: true,
     minify: true,
     sourcemap: process.argv.includes("--source-map"),
