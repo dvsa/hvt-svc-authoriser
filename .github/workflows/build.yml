@@ -1,0 +1,42 @@
+name: 🟢 Build hash and deploy to S3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/*
+      - feat/*
+      - develop
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    name: build & store
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Starting build and deploy process (${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+      
+      - run: npm run package
+        env:
+          ZIP_NAME: ${{ github.run_id }}
+
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
+          role-to-assume: ${{ secrets.AWSHVTDEVROLE }}
+          role-session-name: hvt-authoriser-${{ github.run_id }}
+
+      - run: |
+          aws s3 cp ./${{ github.run_id }}.zip s3://${{ secrets.HVT_LAMBDA_BUCKET }}/authoriser/hvt-custom-authoriser-${{ github.run_id }}.zip
+          echo "Uploaded to S3" >> $GITHUB_STEP_SUMMARY
